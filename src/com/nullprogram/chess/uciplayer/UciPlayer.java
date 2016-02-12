@@ -16,7 +16,7 @@ public class UciPlayer implements Player, UciListener {
 
     public static final int BEST_MOVE_NUMBER = 20;
     public static final int ANALYSIS_TIME = 20000;
-    public static final String ENGINE_PATH = "C:/Documents and Settings/Administrator/Documenti/NetBeansProjects/StockFish/engine/SOS-51_Arena.exe";
+    public static final String ENGINE_PATH = Chess.CHESS_ENGINE_PATH;
     private UCIChess uci = null;
     private Game game;
     private String currentFEN = ChessBoard.STARTPOSITION;
@@ -96,8 +96,6 @@ public class UciPlayer implements Player, UciListener {
         return moveList;
     }
 
-    public static void main(String[] args) {
-    }
     private MoveList analyzedMoves = null;
 
     @Override
@@ -109,4 +107,8 @@ public class UciPlayer implements Player, UciListener {
     public void opponentTurn(Board board, Move move, Side side) {
         currentFEN = ChessBoard.moveFromFEN(currentFEN, move.toString());
     }
+    
+    public void dispose() {
+        uci.stop_Engine();
+    }    
 }

@@ -14,14 +14,17 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public final class Chess {
 
-    /** This class's Logger. */
+    /**
+     * This class's Logger.
+     */
     private static final Logger LOG =
-        Logger.getLogger("com.nullprogram.chess.Chess");
-
-    /** The program's running title, prefix only. */
+            Logger.getLogger("com.nullprogram.chess.Chess");
+    /**
+     * The program's running title, prefix only.
+     */
     private static final String TITLE_PREFIX = "October Chess";
-    
-    public static String CHESS_ENGINE_PATH = null;
+    public static String CHESS_ENGINE_PATH = "./stockfish/stockfish-6-32.exe";
+//    public static String CHESS_ENGINE_OPTIONS="";
 
     /**
      * Hidden constructor.
@@ -38,11 +41,14 @@ public final class Chess {
         try {
             String lnf = UIManager.getSystemLookAndFeelClassName();
             UIManager.setLookAndFeel(lnf);
-            if (args[0]!=null) {
-                CHESS_ENGINE_PATH=args[0];
-            } else {
-                CHESS_ENGINE_PATH="./stackfish/stockfish-6-32.exe";
+            if (args != null && args.length > 0) {
+                if (args[0] != null) {
+                    CHESS_ENGINE_PATH = args[0];
+                }
             }
+//            if (args[1]!=null) {
+//                CHESS_ENGINE_OPTIONS=args[1];
+//            }
         } catch (IllegalAccessException e) {
             LOG.warning("Failed to access 'Look and Feel'");
         } catch (InstantiationException e) {

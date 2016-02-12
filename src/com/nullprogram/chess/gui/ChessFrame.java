@@ -7,12 +7,7 @@ import com.nullprogram.chess.uciplayer.UciAnalyzer;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.ScrollPane;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -75,9 +70,16 @@ public class ChessFrame extends JFrame
             public void mouseClicked(MouseEvent evnt) {
                 if (evnt.getClickCount() == 1) {
                     String str = getValueAt(analysisTable.getSelectedRow(), 0).toString();
-                    String moves = str.substring(str.indexOf("pv: ")+3).trim();
+                    String moves = str.substring(str.indexOf("pv: ") + 3).trim();
                     display.showMoves(moves, game.getBoard());
                 }
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+
+            public void windowClosing(WindowEvent we) {
+                game.dispose();
             }
         });
     }
@@ -86,9 +88,6 @@ public class ChessFrame extends JFrame
         game.setStatus("Analyzing " + game.getTurn().name().toLowerCase() + "'s moves...");
         display.analyzePosition(game.getTurn());
     }
-    
-
-    
 
     /**
      * Set up a new game.
@@ -164,7 +163,7 @@ public class ChessFrame extends JFrame
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        if (analyzedMoves != null && analyzedMoves.size()>rowIndex && analyzedMoves.get(rowIndex)!=null) {
+        if (analyzedMoves != null && analyzedMoves.size() > rowIndex && analyzedMoves.get(rowIndex) != null) {
             return analyzedMoves.get(rowIndex) + " with score " + analyzedMoves.get(rowIndex).getScore() + " pv: " + analyzedMoves.get(rowIndex).getAnalyzedMoves();
         } else {
             return "-";

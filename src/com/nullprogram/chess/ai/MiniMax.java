@@ -447,4 +447,9 @@ public class MiniMax implements Player {
         
     }
 
+    @Override
+    public void dispose() {
+        
+    }
+
 }

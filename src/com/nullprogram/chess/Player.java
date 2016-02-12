@@ -21,4 +21,6 @@ public interface Player {
 //    public MoveList analyzeMove(Board board, Move move, Piece.Side side);
     public void opponentTurn(Board board, Move move, Piece.Side side);
     
+    public void dispose();
+    
 }

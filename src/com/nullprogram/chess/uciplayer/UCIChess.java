@@ -203,7 +203,7 @@ public class UCIChess {
             if (moves != null && !moves.isEmpty()) {
                 cmd = "position fen " + fen + " moves " + moves + "\n"; //the cmd to send
             } else {
-                cmd = "position fen " + fen + " "  + "\n"; //the cmd to send
+                cmd = "position fen " + fen + " " + "\n"; //the cmd to send
             }
             //send command
             if (trace) {
@@ -805,6 +805,15 @@ public class UCIChess {
     private boolean isKey(String val) {
         String words = "depth seldepth time nodes pv multipv cp mate lowerbound upperbound currmove currmovenumber hashfull nps tbhits sbhits cpuload string refutation currline";
         return words.contains(val);
+    }
+
+    protected void finalize() throws Throwable {
+        try {
+            System.out.println("Closing Engine");
+            stop_Engine();        // close open files
+        } finally {
+            super.finalize();
+        }
     }
 
     /**

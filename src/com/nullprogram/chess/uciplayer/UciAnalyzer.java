@@ -4,10 +4,7 @@
  */
 package com.nullprogram.chess.uciplayer;
 
-import com.nullprogram.chess.Board;
-import com.nullprogram.chess.Game;
-import com.nullprogram.chess.Move;
-import com.nullprogram.chess.MoveList;
+import com.nullprogram.chess.*;
 import com.nullprogram.chess.Piece.Side;
 import com.nullprogram.chess.boards.StandardBoard;
 
@@ -26,7 +23,7 @@ public class UciAnalyzer {
 
     public UciAnalyzer(Game game) {
         this.game = game;
-        uci = new UCIChess(UciPlayer.ENGINE_PATH);
+        uci = new UCIChess(Chess.CHESS_ENGINE_PATH);
         if (uci.get_UciOk(true)) {
         }
         uci.send_Option_Name_WithValue("MultiPV", "" + BEST_MOVE_NUMBER);
@@ -93,6 +90,10 @@ public class UciAnalyzer {
 
     public void addListener(UciListener listener) {
         uci.addListener(listener);
+    }
+    
+    public void dispose() {
+        uci.stop_Engine();
     }
 
     public static void main(String[] args) {

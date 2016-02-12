@@ -179,6 +179,10 @@ public class BoardPanel extends JComponent
         opponentResponses = null;
     }
 
+    @Override
+    public void dispose() {
+    }
+
     /**
      * The interaction modes.
      */
@@ -201,7 +205,6 @@ public class BoardPanel extends JComponent
     protected BoardPanel() {
         initWriter();
     }
-    
     private AnalysisListener analysisListener = null;
 
     /**
@@ -220,7 +223,7 @@ public class BoardPanel extends JComponent
     private void initWriter() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
         String date = sdf.format(new Date());
-        String path = System.getProperty("user.home")+"/Chess Games";
+        String path = System.getProperty("user.home") + "/Chess Games";
         try {
             new File(path).mkdirs();
             document = new FileWriter(new File(path + "/Game-" + date + ".html"));
@@ -315,12 +318,12 @@ public class BoardPanel extends JComponent
                 }
                 at.setToTranslation(x * TILE_SIZE, y * TILE_SIZE);
                 g.fill(at.createTransformedShape(TILE));
-                g.setColor(new Color(0,0,0,128));
-                g.setFont(new Font("Arial",Font.PLAIN,35));
+                g.setColor(new Color(0, 0, 0, 128));
+                g.setFont(new Font("Arial", Font.PLAIN, 35));
                 if (flipped) {
-                    g.drawString("abcdefgh".substring(x,x+1)+"87654321".substring(y,y+1), (int)(x* TILE_SIZE), (int)(y* TILE_SIZE)+35);            
+                    g.drawString("abcdefgh".substring(x, x + 1) + "87654321".substring(y, y + 1), (int) (x * TILE_SIZE), (int) (y * TILE_SIZE) + 35);
                 } else {
-                    g.drawString("abcdefgh".substring(x,x+1)+"12345678".substring(y,y+1), (int)(x* TILE_SIZE), (int)(y* TILE_SIZE)+35);                                
+                    g.drawString("abcdefgh".substring(x, x + 1) + "12345678".substring(y, y + 1), (int) (x * TILE_SIZE), (int) (y * TILE_SIZE) + 35);
                 }
             }
         }
@@ -387,7 +390,7 @@ public class BoardPanel extends JComponent
 //                }
             }
         }
-        
+
         if (sequencedMoves != null) {
             list = sequencedMoves;
             int counter = 0;
@@ -397,7 +400,7 @@ public class BoardPanel extends JComponent
 //                if (move.getScore() > 0) {
                 if (counter < drawingPosition) {
 //                    highlight(g, move.getDest(), 2);
-                    drawArrow(g, move, new BasicStroke(( (maximumStrength/list.size()) * (list.size()- counter))));
+                    drawArrow(g, move, new BasicStroke(((maximumStrength / list.size()) * (list.size() - counter))));
 //                } else {
 //                    highlight(g, move.getDest(), 4);
 //                    drawArrow(g, move, new BasicStroke(10));
@@ -409,7 +412,7 @@ public class BoardPanel extends JComponent
 //                }
             }
         }
-        
+
 
         /*
          * Draw last move
@@ -645,8 +648,8 @@ public class BoardPanel extends JComponent
 
                     public void run() {
 //                        analyzer.takeTurn(analysisBoard, Piece.opposite(side));
-                        opponentResponses = analyzer.analizePosition(analysisBoard,Piece.opposite(side));
-                        if (analysisListener!=null) {
+                        opponentResponses = analyzer.analizePosition(analysisBoard, Piece.opposite(side));
+                        if (analysisListener != null) {
                             analysisListener.updateAnalysis(opponentResponses);
                         }
                         repaint();
@@ -714,22 +717,21 @@ public class BoardPanel extends JComponent
         }
         return new Position(x, y);
     }
-    private MoveList analyzedMoves = null;    
-    private MoveList sequencedMoves = null;    
+    private MoveList analyzedMoves = null;
+    private MoveList sequencedMoves = null;
 
     public void showMoves(String moves, Board board) {
         String[] splittedMoves = moves.split(" ");
         analyzedMoves = null;
         opponentResponses = null;
         sequencedMoves = new MoveList(board);
-        for (int i=0; i<splittedMoves.length; i++) {
+        for (int i = 0; i < splittedMoves.length; i++) {
             Move move = new Move(splittedMoves[i]);
             sequencedMoves.add(move);
         }
         repaint();
     }
-    
-    
+
     public void analyzePosition(final Piece.Side currentSide) {
         suggestedMove = null;
         sequencedMoves = null;
@@ -738,11 +740,11 @@ public class BoardPanel extends JComponent
             public void run() {
 //                suggestedMove = analyzer.takeTurn(board.copy(), currentSide);
 ////                suggestedMove = analyzer.takeTurn(board.copy(), currentSide, suggestedMove.getScore()*.9);
-                analyzedMoves = analyzer.analizePositionFast(board,currentSide);
+                analyzedMoves = analyzer.analizePositionFast(board, currentSide);
 //                analyzedMoves = analyzer.analizePosition(board,currentSide);
                 analysisListener.updateAnalysis(analyzedMoves);
                 repaint();
-                analyzedMoves = analyzer.analizePosition(board,currentSide);
+                analyzedMoves = analyzer.analizePosition(board, currentSide);
 //                analyzedMoves = analyzer.analizePosition(board,currentSide);
                 analysisListener.updateAnalysis(analyzedMoves);
                 repaint();
@@ -768,7 +770,7 @@ public class BoardPanel extends JComponent
             Logger.getLogger(BoardPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         analyzerThread.start();
-        
+
 
     }
 
@@ -783,7 +785,7 @@ public class BoardPanel extends JComponent
             latch = new CountDownLatch(1);
             board = turnBoard;
             side = currentSide;
-            analyzedMoves = analyzer.analizePositionFast(board,currentSide);
+            analyzedMoves = analyzer.analizePositionFast(board, currentSide);
             analysisListener.updateAnalysis(analyzedMoves);
             repaint();
             mode = Mode.PLAYER;
@@ -796,9 +798,9 @@ public class BoardPanel extends JComponent
             Board copyBoard = board.copy();
             copyBoard.move(selectedMove);
             sequencedMoves = null;
-            opponentResponses = analyzer.analizePositionFast(copyBoard,Piece.opposite(currentSide));
+            opponentResponses = analyzer.analizePositionFast(copyBoard, Piece.opposite(currentSide));
             analysisListener.updateAnalysis(opponentResponses);
-            
+
             document.append("<h2>").append("Move done: " + selectedMove).append("</h2>").append("\n");
             return selectedMove;
         } catch (IOException ex) {

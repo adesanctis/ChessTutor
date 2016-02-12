@@ -67,6 +67,12 @@ public class Game implements Runnable {
      */
     protected Game() {
     }
+    
+    public void dispose() {
+        white.dispose();
+        black.dispose();
+        analyzer.dispose();
+    }
 
     /**
      * Create a new game with the given board and players.
