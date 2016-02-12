@@ -8,6 +8,6 @@ For each position engine analyzes shortly best moves suggesting what is more use
 You can request a deep analysis (30 seconds as default).
 You can request analysis for a possible move (on right click).
 
-Each position analysis in reported with next moves and a score in the list belowe.
+Each position analysis is reported with next moves and a score in the list belowe.
 
-See sreenshots for more.
+See screenshots for more.
