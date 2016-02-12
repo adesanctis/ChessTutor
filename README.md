@@ -1,7 +1,7 @@
 # ChessTutor
 A chess tutor program.
 
-![alt tag](https://raw.github.com/username/projectname/branch/path/to/img.png)
+![alt tag](https://github.com/adesanctis/ChessTutor/blob/master/screenshots/Screenshot%20-%2012_02_2016%20%2C%2014.34.22.png)
 
 Starting from October Chess for board and interactions and integrating a UCI chess Interface, I'd like to implement a step by step tutor chess program based on Stockfish.
 For each position engine analyzes shortly best moves suggesting what is more useful.
