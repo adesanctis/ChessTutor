@@ -79,7 +79,9 @@ public class ChessFrame extends JFrame
         addWindowListener(new WindowAdapter() {
 
             public void windowClosing(WindowEvent we) {
-                game.dispose();
+                if (game != null) {
+                    game.dispose();
+                }
             }
         });
     }

@@ -175,6 +175,7 @@ public class UCIChess {
 //            if (p.isAlive()) {
 //                p.destroyForcibly();
 //            }
+            System.out.println("Releasing engine process...");
             p.destroy();
             //closes streams (but must be close with process)
             out.close();

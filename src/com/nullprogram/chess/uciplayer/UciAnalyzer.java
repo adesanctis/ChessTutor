@@ -72,7 +72,10 @@ public class UciAnalyzer {
                 //System.out.println(uci.get_DetailedInfo(index).getScoreCP() + ": " + uci.get_DetailedInfo(index).getPv());
 
                 move = new Move(uci.get_DetailedInfo(index).getPv().substring(0, 4));
-                move.setScore(Double.parseDouble(uci.get_DetailedInfo(index).getScoreCP()));
+                try {
+                    move.setScore(Double.parseDouble(uci.get_DetailedInfo(index).getScoreCP()));
+                } catch (NumberFormatException numberFormatException) {
+                }
                 move.setAnalyzedMoves(uci.get_DetailedInfo(index).getPv());
                 moves[Integer.parseInt(uci.get_DetailedInfo(index).getMultiPV()) - 1] = move;
             }
